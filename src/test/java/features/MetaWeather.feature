@@ -10,3 +10,5 @@ Feature: MetaWeather API tests
     And param query = 'London'
     When method get
     Then status 200
+    And match response[0] contains {title: 'London'}
+    And match each response contains {title: 'London'}
