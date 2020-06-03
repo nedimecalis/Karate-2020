@@ -8,7 +8,7 @@ Feature: Book-it API tests
     * param password = 'maxpayne'
     * method get
     * def token = response.accessToken
-    * print "Token: ", token
+    * print 'Token: ', token
 
   Scenario: Get all rooms
     Given path '/api/rooms'
@@ -16,3 +16,4 @@ Feature: Book-it API tests
     When method get
     Then status 200
     * print karate.pretty(response)
+
