@@ -21,12 +21,18 @@ Feature: Basic tests for zippopotam
     Given path '/us/<zip_code>'
     When method get
     Then status 200
+    And match header Content-Type == 'application/json'
+    And match response.country == 'United States'
+    And match response.places[0].['place name'] == '<city>'
+    And match response.places[0].['state abbreviation'] == '<state_abbreviation>'
+    And match response.['post code'] == '<zip_code>'
+    And print karate.pretty(response)
 
 
     Examples: test data
-      | city           | zip_code | state_abbreviation |
-      | New York  City | 10001    | NY                 |
-      | Washington     | 20002    | DC                 |
-      | Pompano Beach  | 33063    | FL                 |
-      | Agawam         | 01001    | MA                 |
+      | city          | zip_code | state_abbreviation |
+      | New York City | 10001    | NY                 |
+      | Washington    | 20002    | DC                 |
+      | Pompano Beach | 33063    | FL                 |
+      | Agawam        | 01001    | MA                 |
      
