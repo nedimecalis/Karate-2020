@@ -12,3 +12,18 @@ Feature: MetaWeather API tests
     Then status 200
     And match response[0] contains {title: 'London'}
     And match each response contains {title: 'London'}
+
+
+  Scenario Outline: Verify that city <query> exist
+    Given path '/location/search'
+    And param query = '<query>'
+    When method get
+    Then status 200
+    And match each response contains {title: '<query>'}
+    * print karate.pretty(response)
+
+    Examples: cities
+      | query       |
+      | New York    |
+      | London      |
+      | Los Angeles |
