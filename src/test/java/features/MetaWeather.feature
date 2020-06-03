@@ -7,5 +7,6 @@ Feature: MetaWeather API tests
 
   Scenario: Search for London
     Given path '/location/search'
+    And param query = 'London'
     When method get
     Then status 200
