@@ -26,3 +26,8 @@ Feature: Spartan API tests
     When method post
     Then status 201
     And print karate.pretty(response)
+
+  Scenario: Delete spartan
+    Given path '/api/spartans/203'
+    When method delete
+    Then status 204
