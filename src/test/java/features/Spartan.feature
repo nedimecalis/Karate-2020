@@ -2,7 +2,8 @@ Feature: Spartan API tests
 
   Background: setup
     * url 'http://54.196.47.224:8000'
-    * header Authorization = call read('basic-auth.js') { username: 'admin', password: 'admin' }
+    * def token = call read('basic-auth.js') { username: 'admin', password: 'admin' }
+    * header Authorization = token
 
 
   Scenario: Get all spartans
@@ -26,8 +27,28 @@ Feature: Spartan API tests
     When method post
     Then status 201
     And print karate.pretty(response)
-
-  Scenario: Delete spartan
-    Given path '/api/spartans/203'
+    * def id = response.data.id
+    * header Authorization = token
+    Given path '/api/spartans/', id
     When method delete
     Then status 204
+    * print id, ' is deleted'
+    * print karate.pretty(responseHeaders)
+#
+#  Scenario: Delete spartan
+#    Given path '/api/spartans/203'
+#    When method delete
+#    Then status 204
+#    * request spartan - body of request
+#    * def spartan = read('spartan.json') - spartan is a variable
+
+  Scenario: Add new spartan from external JSON file
+      Given path '/api/spartans'
+      * def spartan = read('spartan.json')
+      * request spartan
+      When method post
+      * print karate.pretty(response)
+      Then status 201
+      And assert response.success == 'A Spartan is Born!'
+
+
